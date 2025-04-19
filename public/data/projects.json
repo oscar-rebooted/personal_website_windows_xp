@@ -1,0 +1,47 @@
+[
+  {
+    "id": "project1",
+    "title": "Shazoom",
+    "description": "A recreation of Shazam using Wang's (2003) original paper",
+    "mediaUrl": "/videos/video_shazoom.mp4",
+    "mediaType": "video",
+    "githubUrl": "https://github.com/oscar-rebooted/shazoom",
+    "liveUrl": "https://shazoom.vercel.app/"
+  },
+  {
+    "id": "project2",
+    "title": "ExpertConnect",
+    "description": "React demo to solve a painpoint for the private equity team at work",
+    "mediaUrl": "/videos/video_ExpertConnect.mp4",
+    "mediaType": "video",
+    "githubUrl": "https://github.com/oscar-rebooted/ExpertConnect",
+    "liveUrl": "oscar-rebooted.github.io/ExpertConnect/"
+  },
+  {
+    "id": "project3",
+    "title": "Personal Website",
+    "description": "Windows XP themed personal website",
+    "mediaUrl": "/placeholder.svg?height=150&width=200",
+    "mediaType": "image",
+    "githubUrl": "",
+    "liveUrl": ""
+  },
+  {
+    "id": "project4",
+    "title": "Fourier visualisation",
+    "description": "A cool visualisation I wanted to make while learning about fourier transforms",
+    "mediaUrl": "/videos/video_fourier_visualisation.mp4",
+    "mediaType": "video",
+    "githubUrl": "https://github.com/oscar-rebooted/fourier-visualisation",
+    "liveUrl": "https://oscar-rebooted.github.io/fourier-visualisation/"
+  },
+  {
+    "id": "project5",
+    "title": "Oceanview",
+    "description": "A dashboard for visualising all the ships around the world in real time",
+    "mediaUrl": "/images/photo_oceanview.png",
+    "mediaType": "image",
+    "githubUrl": "https://github.com/oscar-rebooted/oceanview",
+    "liveUrl": "n.a."
+  }
+]
