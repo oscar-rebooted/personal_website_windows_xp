@@ -128,7 +128,7 @@ export function VLCPlayer({ id, audioSrc, title = "Relax.mp3", autoPlay = true }
   }
 
   return (
-    <Window id={id} title="VLC media player" width={400} height={200} icon="/images/vlc-icon.svg">
+    <Window id={id} title="VLC media player - Daybreak, Michael Haggins" width={500} height={200} icon="/images/vlc-icon.svg">
       <div className="flex flex-col h-full bg-[#E9E9E9] p-1">
         <audio ref={audioRef} src={audioSrc} />
 
