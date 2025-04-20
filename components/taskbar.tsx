@@ -17,6 +17,7 @@ export function Taskbar({ currentTime }: TaskbarProps) {
   const [userTimezone, setUserTimezone] = useState<string>("")
   const [audioLoaded, setAudioLoaded] = useState(false)
   const [startSound, setStartSound] = useState<HTMLAudioElement | null>(null)
+  const [tooltipKey, setTooltipKey] = useState(0);
 
   // Initialize audio on client side
   useEffect(() => {
@@ -31,39 +32,33 @@ export function Taskbar({ currentTime }: TaskbarProps) {
 
   // Get user's timezone on component mount
   useEffect(() => {
-    const fetchTimezone = async () => {
-      try {
-        const response = await fetch("https://ipapi.co/json/")
-        const data = await response.json()
-        setUserTimezone(data.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone)
-      } catch (error) {
-        console.error("Error fetching timezone:", error)
-        // Fallback to browser's timezone
-        setUserTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone)
+    const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    setUserTimezone(browserTimezone);
+  }, []);
+  
+  // Function to update the time based on selected timezone
+  const updateTime = () => {
+    if (isLondonTime) {
+      // London time
+      const londonTime = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/London" }))
+      setTime(londonTime)
+    } else {
+      // User's local time
+      if (userTimezone) {
+        const localTime = new Date(new Date().toLocaleString("en-US", { timeZone: userTimezone }))
+        setTime(localTime)
+      } else {
+        setTime(new Date())
       }
     }
-
-    fetchTimezone()
-  }, [])
+  }
 
   // Update time every second
   useEffect(() => {
-    const timer = setInterval(() => {
-      if (isLondonTime) {
-        // London time
-        const londonTime = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/London" }))
-        setTime(londonTime)
-      } else {
-        // User's local time
-        if (userTimezone) {
-          const localTime = new Date(new Date().toLocaleString("en-US", { timeZone: userTimezone }))
-          setTime(localTime)
-        } else {
-          setTime(new Date())
-        }
-      }
-    }, 1000)
-
+    // Initial time update
+    updateTime()
+    
+    const timer = setInterval(updateTime, 1000)
     return () => clearInterval(timer)
   }, [isLondonTime, userTimezone])
 
@@ -76,9 +71,13 @@ export function Taskbar({ currentTime }: TaskbarProps) {
 
   const toggleTimeZone = () => {
     setIsLondonTime(!isLondonTime)
+    // Immediately update the time after changing timezone
+    updateTime()
+    
     setTooltipText(isLondonTime ? "Your time" : "My time")
     setShowTooltip(true)
-
+    // Increment the key to force remount
+    setTooltipKey(prev => prev + 1);
     // Hide tooltip after 2 seconds
     setTimeout(() => {
       setShowTooltip(false)
@@ -97,36 +96,41 @@ export function Taskbar({ currentTime }: TaskbarProps) {
   }
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 z-20 h-15 windows-xp-taskbar">
-      <div className="flex h-full items-center justify-between">
-        {/* Start Button */}
-        <div className="flex items-center h-full">
-          <button className="h-full flex items-center justify-center cursor-pointer" onClick={playStartSound}>
-            <Image src="/images/start_button.png" alt="Start" width={100} height={30} className="h-full w-auto" />
+    <div className="windows-xp-taskbar">
+      <div className="flex h-full justify-between">
+        <div className="flex" >
+          {/* Start Button */}        
+          <button onClick={playStartSound}>
+            <Image 
+              src="/images/start_button.png" 
+              alt="Start" 
+              width={0} 
+              height={0} 
+              className="h-full w-auto" 
+            />
           </button>
-
           {/* Quick Launch */}
-          <div className="ml-2 flex items-center border-l border-[#1752cf] pl-2">
+          <div className="ml-2 flex items-center">
             <button
               className="mx-1 rounded p-1 hover:bg-[#4b8cf5]/40"
               onClick={() => openLink("https://www.linkedin.com/in/oscarbrisset/")}
               title="LinkedIn"
             >
-              <IoLogoLinkedin size={20} className="text-white" />
+              <IoLogoLinkedin size={30} className="text-white" />
             </button>
             <button
               className="mx-1 rounded p-1 hover:bg-[#4b8cf5]/40"
               onClick={() => openLink("https://github.com/oscar-rebooted")}
               title="GitHub"
             >
-              <IoLogoGithub size={20} className="text-white" />
+              <IoLogoGithub size={30} className="text-white" />
             </button>
             <button
               className="mx-1 rounded p-1 hover:bg-[#4b8cf5]/40"
               onClick={() => openLink("https://medium.com/@oscar_brisset")}
               title="Medium"
             >
-              <IoLogoMedium size={20} className="text-white" />
+              <IoLogoMedium size={30} className="text-white" />
             </button>
           </div>
         </div>
@@ -135,13 +139,13 @@ export function Taskbar({ currentTime }: TaskbarProps) {
         <div className="flex items-center h-full bg-[#0c327a]/30 px-2">
           <div className="flex items-center relative">
             {showTooltip && (
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 px-2 py-1 bg-white/70 text-black text-xs rounded animate-fade-out">
+              <div key={tooltipKey} className="absolute bottom-full left-1/2 transform -translate-x-1/2 py-1 w-20 text-center bg-white/70 text-black text-xs animate-fade-out">
                 {tooltipText}
               </div>
             )}
             <Wifi size={16} className="mx-2 text-white" />
             <Volume2 size={16} className="mx-2 text-white" />
-            <button className="text-white text-xs font-normal cursor-pointer mx-2" onClick={toggleTimeZone}>
+            <button className="text-white text-xs font-normal cursor-pointer mx-2 w-16" onClick={toggleTimeZone}>
               {formattedTime}
             </button>
           </div>
