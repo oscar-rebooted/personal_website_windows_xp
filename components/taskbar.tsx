@@ -100,7 +100,11 @@ export function Taskbar({ currentTime }: TaskbarProps) {
       <div className="flex h-full justify-between">
         <div className="flex" >
           {/* Start Button */}        
-          <button onClick={playStartSound}>
+          <button 
+            className="flex items-center p-0 m-0 bg-transparent border-0 h-full"
+            style={{ width: "fit-content", minWidth: "min-content" }}
+            onClick={playStartSound}
+          >
             <Image 
               src="/images/start_button.png" 
               alt="Start" 

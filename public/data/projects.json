@@ -11,7 +11,7 @@
   {
     "id": "project2",
     "title": "ExpertConnect",
-    "description": "React demo to solve a painpoint for the private equity team at work",
+    "description": "React demo to solve a painpoint for the private equity team at BCG",
     "mediaUrl": "/videos/video_ExpertConnect.mp4",
     "mediaType": "video",
     "githubUrl": "https://github.com/oscar-rebooted/ExpertConnect",
@@ -19,17 +19,17 @@
   },
   {
     "id": "project3",
-    "title": "Personal Website",
-    "description": "Windows XP themed personal website",
-    "mediaUrl": "/placeholder.svg?height=150&width=200",
-    "mediaType": "image",
-    "githubUrl": "",
-    "liveUrl": ""
+    "title": "Personal website",
+    "description": "Windows XP-themed personal website",
+    "mediaUrl": "/videos/video_personal_website.mp4",
+    "mediaType": "video",
+    "githubUrl": "https://github.com/oscar-rebooted/personal_website_windows_xp",
+    "liveUrl": "https://oscar-brisset.vercel.app/"
   },
   {
     "id": "project4",
     "title": "Fourier visualisation",
-    "description": "A cool visualisation I wanted to make while learning about fourier transforms",
+    "description": "A cool visualisation I wanted to make while learning about Fourier transforms",
     "mediaUrl": "/videos/video_fourier_visualisation.mp4",
     "mediaType": "video",
     "githubUrl": "https://github.com/oscar-rebooted/fourier-visualisation",

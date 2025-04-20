@@ -3,12 +3,11 @@ import "./globals.css"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Windows XP Personal Website",
+  title: "Personal website - Oscar",
   description: "A personal website styled like Windows XP",
   icons: {
     icon: "/favicon.png",
-  },
-    generator: 'v0.dev'
+  }
 }
 
 export default function RootLayout({
